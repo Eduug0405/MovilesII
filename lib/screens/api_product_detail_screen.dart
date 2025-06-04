@@ -30,7 +30,7 @@ class ApiProductDetailScreen extends StatelessWidget {
                 children: [
                   ElevatedButton(
                     onPressed: () {
-                      Cart.addFromApi(product); // crea esta función si usas otro tipo
+                      Cart.addFromApi(product); 
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text('${product.title} agregado al carrito')),
                       );
