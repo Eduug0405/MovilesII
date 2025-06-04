@@ -1,8 +1,14 @@
+// lib/screens/product_list_screen.dart
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+
 import '../services/auth_service.dart';
+
+// 👇 añade estas dos importaciones
+import '../models/api_product.dart';
+import 'api_product_detail_screen.dart';
 
 class ProductListScreen extends StatefulWidget {
   final Map<String, dynamic> userData;
@@ -36,29 +42,23 @@ class _ProductListScreenState extends State<ProductListScreen> {
   }
 
   void addToCart(product) {
-    setState(() {
-      cart.add(product);
-    });
+    setState(() => cart.add(product));
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text('${product["title"]} agregado al carrito')),
     );
   }
 
-  void logout() async {
+  Future<void> logout() async {
     final prefs = await SharedPreferences.getInstance();
     final name = prefs.getString('name') ?? '';
 
-    if (name.contains("Google")) {
-   await authService.signOut();
-
-    }
+    if (name.contains('Google')) await authService.signOut();
 
     await prefs.remove('token');
     await prefs.remove('name');
-
     if (!mounted) return;
-    Navigator.pushReplacementNamed(context, '/');
 
+    Navigator.pushReplacementNamed(context, '/');
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Sesión cerrada con éxito')),
     );
@@ -66,23 +66,20 @@ class _ProductListScreenState extends State<ProductListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final String username = widget.userData["name"] ?? "Usuario";
+    final String username = widget.userData['name'] ?? 'Usuario';
 
     return Scaffold(
       appBar: AppBar(
         title: Text('Hola, $username 👋'),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: logout,
-          ),
+          IconButton(icon: const Icon(Icons.logout), onPressed: logout),
           IconButton(
             icon: const Icon(Icons.shopping_cart),
             onPressed: () {
               showModalBottomSheet(
                 context: context,
                 builder: (_) => ListView(
-                  children: cart.map((item) => ListTile(title: Text(item["title"]))).toList(),
+                  children: cart.map((item) => ListTile(title: Text(item['title']))).toList(),
                 ),
               );
             },
@@ -98,13 +95,23 @@ class _ProductListScreenState extends State<ProductListScreen> {
                 return Card(
                   margin: const EdgeInsets.all(8),
                   child: ListTile(
-                    leading: Image.network(product["image"], width: 50, height: 50),
-                    title: Text(product["title"]),
-                    subtitle: Text("\$${product["price"]}"),
+                    leading: Image.network(product['image'], width: 50, height: 50),
+                    title: Text(product['title']),
+                    subtitle: Text('\$${product['price']}'),
                     trailing: IconButton(
                       icon: const Icon(Icons.add_shopping_cart),
                       onPressed: () => addToCart(product),
                     ),
+                    // 👉 Navega al detalle al tocar la tarjeta
+                    onTap: () {
+                      final apiProduct = ApiProduct.fromMap(product);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => ApiProductDetailScreen(product: apiProduct),
+                        ),
+                      );
+                    },
                   ),
                 );
               },
