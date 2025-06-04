@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "50644443361",
+    "project_id": "loginfire-6ca9b",
+    "storage_bucket": "loginfire-6ca9b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:50644443361:android:e4430d58646457e715d7a0",
+        "android_client_info": {
+          "package_name": "com.example.eshop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "50644443361-04c6u2t8uakqn2j92vda2s5qcj2hi81f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.eshop",
+            "certificate_hash": "d71507f431aa098ebd00b26ab3d829446b3bff89"
+          }
+        },
+        {
+          "client_id": "50644443361-ants7jsp0ta0spsqsi38cq2igu1e12mt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBalaqdkVMjq13ja58IHR9oR2y13PW5WnA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "50644443361-ants7jsp0ta0spsqsi38cq2igu1e12mt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
